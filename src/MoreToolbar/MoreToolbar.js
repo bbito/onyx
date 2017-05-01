@@ -140,6 +140,11 @@ module.exports = kind(
 		Control.prototype.initComponents.apply(this, arguments);
 		this.$.client.setLayoutKind(this.clientLayoutKind);
 	},
+	// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+	rendered: function(){
+		this.reflow();
+		this.inherited( arguments );
+	},
 
 	/**
 	* @private
@@ -151,19 +156,24 @@ module.exports = kind(
 	/**
 	* @private
 	*/
+	// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
 	reflow: function () {
 		Control.prototype.reflow.apply(this, arguments);
 		if (this.isContentOverflowing()) {
 			this.$.nard.show();
-			if (this.popItem()) {
-				this.reflow();
+			while( this.isContentOverflowing() ){
+				this.popItem();
 			}
-		} else if (this.tryPushItem()) {
-			this.reflow();
-		} else if (!this.$.menu.children.length) {
+		} else while(this.tryPushItem()) {} 
+		if (!this.$.menu.children.length) {
 			this.$.nard.hide();
 			this.$.menu.hide();
 		}
+		else{
+			this.$.nard.show();
+		}
+		// An Android 7 mobile browser wanted following line too, to have screen rotation to work.
+		this.inherited(arguments);
 	},
 
 	/**
@@ -197,6 +207,8 @@ module.exports = kind(
 			}
 			return true;
 		}
+		// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+		return false; 
 	},
 
 	/**
@@ -235,6 +247,8 @@ module.exports = kind(
 			}
 			return true;
 		}
+		// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+		return false; 
 	},
 
 	/**
@@ -252,6 +266,8 @@ module.exports = kind(
 				this.popItem();
 			}
 		}
+		// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+		return false; 
 	},
 
 	/**
@@ -271,6 +287,8 @@ module.exports = kind(
 				return ((n.offsetLeft + n.offsetWidth) > this.$.client.node.clientWidth);
 			}
 		}
+		// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+		return false; 
 	},
 
 	/**
