@@ -140,7 +140,8 @@ module.exports = kind(
 		Control.prototype.initComponents.apply(this, arguments);
 		this.$.client.setLayoutKind(this.clientLayoutKind);
 	},
-	// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+	// BB Porting 2.3 patch rendered method: 
+	// See: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
 	rendered: function(){
 		this.reflow();
 		this.inherited( arguments );
@@ -156,7 +157,7 @@ module.exports = kind(
 	/**
 	* @private
 	*/
-	// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+	// BB Porting 2.3 patch: reflow method
 	reflow: function () {
 		Control.prototype.reflow.apply(this, arguments);
 		if (this.isContentOverflowing()) {
@@ -207,7 +208,7 @@ module.exports = kind(
 			}
 			return true;
 		}
-		// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+		// BB Porting 2.3 patch: return false from popItem method
 		return false; 
 	},
 
@@ -247,7 +248,7 @@ module.exports = kind(
 			}
 			return true;
 		}
-		// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+		// BB Porting 2.3 patch: return false from pushItem method
 		return false; 
 	},
 
@@ -266,7 +267,7 @@ module.exports = kind(
 				this.popItem();
 			}
 		}
-		// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+		// BB Porting 2.3 patch: return false from tryPushItem method
 		return false; 
 	},
 
@@ -287,7 +288,7 @@ module.exports = kind(
 				return ((n.offsetLeft + n.offsetWidth) > this.$.client.node.clientWidth);
 			}
 		}
-		// BB Porting 2.4 patch: http://forums.enyojs.com/discussion/2595/onyx-moretoolbar-crash-in-enyo-2-3
+		// BB Porting 2.3 patch: return false from isContentOverflowing method
 		return false; 
 	},
 
