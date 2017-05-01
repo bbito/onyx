@@ -162,15 +162,16 @@ module.exports = kind(
 		Control.prototype.reflow.apply(this, arguments);
 		if (this.isContentOverflowing()) {
 			this.$.nard.show();
-			while( this.isContentOverflowing() ){
+			while (this.isContentOverflowing()) {
 				this.popItem();
 			}
-		} else while(this.tryPushItem()) {} 
+		} else {
+			while (this.tryPushItem()) {} 
+		}
 		if (!this.$.menu.children.length) {
 			this.$.nard.hide();
 			this.$.menu.hide();
-		}
-		else{
+		} else {
 			this.$.nard.show();
 		}
 		// An Android 7 mobile browser wanted following line too, to have screen rotation to work.
